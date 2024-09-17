@@ -1,0 +1,29 @@
+from flask import Flask, render_template, request, redirect, url_for
+import pandas as pd
+
+app = Flask(__name__)
+
+doacoes = []
+
+@app.route('/')
+def index():
+    return render_template('index.html', doacoes=doacoes)
+
+@app.route('/add', methods=['POST'])
+def add_doacao():
+    nome = request.form['nome']
+    data = request.form['data']
+    doacao = request.form['doacao']
+    quantidade = request.form['quantidade']
+    
+    doacoes.append({'Nome': nome, 'Data': data, 'Doação': doacao, 'Quantidade': quantidade})
+    return redirect(url_for('index'))
+
+@app.route('/export')
+def export():
+    df = pd.DataFrame(doacoes)
+    df.to_excel('doacoes.xlsx', index=False)
+    return "Doações exportadas com sucesso!"
+
+if __name__ == '__main__':
+    app.run(debug=True)
