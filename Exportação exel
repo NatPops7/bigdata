@@ -1,0 +1,16 @@
+import pandas as pd
+from tkinter import filedialog
+
+def exportar_para_excel():
+    if doacoes:
+        df = pd.DataFrame(doacoes)
+        file_path = filedialog.asksaveasfilename(defaultextension='.xlsx', filetypes=[("Excel files", "*.xlsx")])
+        if file_path:
+            df.to_excel(file_path, index=False)
+            messagebox.showinfo("Sucesso", "Doações exportadas com sucesso!")
+    else:
+        messagebox.showwarning("Aviso", "Não há doações para exportar.")
+
+# Botão para exportar doações
+export_button = tk.Button(root, text="Exportar para Excel", command=exportar_para_excel)
+export_button.grid(row=6, column=1)
