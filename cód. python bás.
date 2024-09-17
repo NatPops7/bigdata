@@ -1,0 +1,23 @@
+import pandas as pd
+
+# Criar dataframe de doações
+data = {'Nome': ['João Silva', 'Maria Lima', 'Ana Costa', 'Carlos Souza'],
+        'Data': ['2024-01-05', '2024-01-10', '2024-01-15', '2024-01-20'],
+        'Doação': ['Alimento', 'Roupa', 'Alimento', 'Alimento'],
+        'Quantidade': [10, 20, 15, 12]}
+
+df = pd.DataFrame(data)
+
+# Exibir resumo das doações
+print("Resumo das Doações")
+print(df)
+
+# Total de doações por tipo
+total_doacoes = df.groupby('Doação').sum()
+print("\nTotal de doações por tipo:")
+print(total_doacoes)
+
+# Maior doador
+maior_doador = df.groupby('Nome').sum().sort_values(by='Quantidade', ascending=False)
+print("\nMaior doador:")
+print(maior_doador.head(1))
