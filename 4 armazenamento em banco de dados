@@ -1,0 +1,25 @@
+import sqlite3
+
+# Criar ou conectar a um banco de dados SQLite
+conn = sqlite3.connect('doacoes.db')
+c = conn.cursor()
+
+# Criar tabela de doações
+c.execute('''CREATE TABLE IF NOT EXISTS doacoes
+             (nome text, data text, doacao text, quantidade integer)''')
+conn.commit()
+
+# Função para salvar doações no banco de dados
+def salvar_doacao_db():
+    nome = nome_entry.get()
+    data = data_entry.get()
+    doacao = doacao_entry.get()
+    quantidade = quantidade_entry.get()
+    
+    if nome and data and doacao and quantidade:
+        c.execute("INSERT INTO doacoes (nome, data, doacao, quantidade) VALUES (?, ?, ?, ?)", 
+                  (nome, data, doacao, int(quantidade)))
+        conn.commit()
+        adicionar_doacao()
+    else:
+        messagebox.showwarning("Aviso", "Preencha todos os campos!")
